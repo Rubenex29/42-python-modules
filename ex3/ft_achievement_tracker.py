@@ -13,15 +13,14 @@ def main():
     print(f"All unique achievements: {alice.union(bob, charlie)}")
     print(f"Total unique achievements: {len(alice.union(bob, charlie))}\n")
     print(f"Common to all players: {alice.intersection(bob, charlie)}")
-    unique = (
-        alice.difference(bob, charlie) |
-        bob.difference(alice, charlie) |
+    unique = alice.difference(bob, charlie).union(
+        bob.difference(alice, charlie),
         charlie.difference(alice, bob)
     )
     print(f"Rare achievements (1 player): {unique}\n")
     print(f"Alice vs Bob common: {alice.intersection(bob)}")
-    alice_unique = alice - (alice & bob)
-    bob_unique = bob - (alice & bob)
+    alice_unique = alice.difference(bob)
+    bob_unique = bob.difference(alice)
     print(f"Alice unique: {alice_unique}")
     print(f"Bob unique: {bob_unique}")
 
