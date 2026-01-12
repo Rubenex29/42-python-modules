@@ -20,7 +20,7 @@ def main():
     )
 
     sys.stdout.write("{[}STANDART{]} Data transmission complete\n")
-    print("\nThree-channel communication test successful")
+    print("\nThree-channel communication test successful.")
 
 
 main()
