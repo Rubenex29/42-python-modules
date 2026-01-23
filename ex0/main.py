@@ -1,7 +1,6 @@
-from ex0.Card import card
 from ex0.CreatureCard import CreatureCard
 
-# ...o resto do teu main...
+
 print("=== DataDeck Card Foundation ===\n")
 print("Testing Abstract Base Class Design:\n")
 print("CreatureCard Info:")

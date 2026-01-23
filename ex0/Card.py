@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class card(ABC):
+class Card(ABC):
     def __init__(self, name: str, cost: int, rarity: str):
         self.name = name
         self.cost = cost
@@ -16,10 +16,7 @@ class card(ABC):
             "name": self.name,
             "cost": self.cost,
             "rarity": self.rarity,
-            "type": "creature",
-            "attack": self.attack,
-            "health": self.health
         }
 
     def is_playable(self, available_mana: int) -> bool:
-        return available_mana >= self.cost
+        return int(available_mana) >= self.cost

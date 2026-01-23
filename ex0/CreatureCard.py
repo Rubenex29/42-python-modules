@@ -1,9 +1,10 @@
-from .Card import card
+from .Card import Card
 import random
 
 
-class CreatureCard(card):
-    def __init__(self, name: str, cost: int, rarity: str, attack: int, health: int):
+class CreatureCard(Card):
+    def __init__(self, name: str, cost: int, rarity: str, attack: int,
+                 health: int):
         super().__init__(name, cost, rarity)
         self.attack = attack
         self.health = health
