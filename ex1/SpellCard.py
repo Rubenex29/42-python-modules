@@ -1,8 +1,10 @@
 from ex0.Card import Card
+from typing import Literal
 
 
 class SpellCard(Card):
-    def __init__(self, name: str, cost: int, rarity: str, effect_type: str):
+    def __init__(self, name: str, cost: int, rarity: str,
+                 effect_type: Literal["damage", "heal", "buff", "debuff"]):
         super().__init__(name, cost, rarity)
         self.effect = effect_type
         self.consumed = False  # Spells are consumed when played (one-time use)
@@ -14,8 +16,7 @@ class SpellCard(Card):
             "buff": "Give target creature +2/+2",
             "debuff": "Silence target creature",
         }
-        effect_type = str(self.effect).lower()
-        return effect_phrases.get(effect_type, "No valid spell effect")
+        return effect_phrases[self.effect]
 
     def play(self, game_state: dict) -> dict:
         if self.consumed:
