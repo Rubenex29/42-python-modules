@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from ex0.Card import Card
 
+
 class CardFactory(ABC):
     @abstractmethod
     def create_creature(self, name_or_power: str | int | None = None) -> Card:
