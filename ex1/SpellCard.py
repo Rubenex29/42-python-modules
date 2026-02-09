@@ -1,10 +1,22 @@
+"""Spell card implementation.
+
+Spells are one-time use: once played successfully, they become consumed.
+"""
+
 from ex0.Card import Card
-from typing import Literal
+from typing import Any, Literal
+
+EffectType = Literal["damage", "heal", "buff", "debuff"]
 
 
 class SpellCard(Card):
-    def __init__(self, name: str, cost: int, rarity: str,
-                 effect_type: Literal["damage", "heal", "buff", "debuff"]):
+    def __init__(
+        self,
+        name: str,
+        cost: int,
+        rarity: str,
+        effect_type: EffectType,
+    ) -> None:
         super().__init__(name, cost, rarity)
         self.effect = effect_type
         self.consumed = False  # Spells are consumed when played (one-time use)
@@ -18,7 +30,7 @@ class SpellCard(Card):
         }
         return effect_phrases[self.effect]
 
-    def play(self, game_state: dict) -> dict:
+    def play(self, game_state: dict[str, Any]) -> dict[str, Any]:
         if self.consumed:
             return {
                 "card_played": self.name,

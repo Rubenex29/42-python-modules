@@ -1,13 +1,17 @@
+"""TournamentCard adds ranking stats on top
+of combat and base Card behavior."""
+
 from ex0.Card import Card
 from ex2.Combatable import Combatable
 from ex4.Rankable import Rankable
 import random
+from typing import Any
 
 
 class TournamentCard(Card, Combatable, Rankable):
     def __init__(self, name: str, cost: int, rarity: str, attack: int,
                  health: int, wins: int = 0, losses: int = 0,
-                 base_rating: int = 1000):
+                 base_rating: int = 1000) -> None:
         super().__init__(name, cost, rarity)
         self.attack_power = attack
         self.health = health
@@ -15,7 +19,7 @@ class TournamentCard(Card, Combatable, Rankable):
         self.losses = losses
         self.base_rating = base_rating
 
-    def play(self, game_state: dict) -> dict:
+    def play(self, game_state: dict[str, Any]) -> dict[str, Any]:
         available_mana = game_state["available_mana"]
         playable = self.is_playable(available_mana)
         if playable:
@@ -26,7 +30,7 @@ class TournamentCard(Card, Combatable, Rankable):
             }
         return {}
 
-    def attack(self, target) -> dict:
+    def attack(self, target: object) -> dict[str, Any]:
         target_name = getattr(target, "name", str(target))
         combat_resolved = self.attack_power > 0 and self.health > 0
         return {
@@ -36,7 +40,7 @@ class TournamentCard(Card, Combatable, Rankable):
             "combat_resolved": combat_resolved,
         }
 
-    def defend(self, incoming_damage: int) -> dict:
+    def defend(self, incoming_damage: int) -> dict[str, Any]:
         block_value = random.randint(0, 2)
         damage_taken = max(0, incoming_damage - block_value)
         still_alive = (self.health - damage_taken) > 0
@@ -47,7 +51,7 @@ class TournamentCard(Card, Combatable, Rankable):
             "still_alive": still_alive,
         }
 
-    def get_combat_stats(self) -> dict:
+    def get_combat_stats(self) -> dict[str, Any]:
         return {
             "combatant": self.name,
             "attack_power": self.attack_power,
@@ -63,7 +67,7 @@ class TournamentCard(Card, Combatable, Rankable):
     def update_losses(self, losses: int) -> None:
         self.losses = losses
 
-    def get_rank_info(self) -> dict:
+    def get_rank_info(self) -> dict[str, Any]:
         return {
             "card": self.name,
             "wins": self.wins,
@@ -71,7 +75,8 @@ class TournamentCard(Card, Combatable, Rankable):
             "rating": self.calculate_rating(),
         }
 
-    def process_match(self, opponent) -> dict:
+    def process_match(self, opponent: "TournamentCard") -> dict[str, Any]:
+        # Decide winner by attack power; break ties randomly.
         winner = self
         loser = opponent
 

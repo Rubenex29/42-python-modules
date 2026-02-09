@@ -1,15 +1,16 @@
 from .Card import Card
 import random
+from typing import Any
 
 
 class CreatureCard(Card):
     def __init__(self, name: str, cost: int, rarity: str, attack: int,
-                 health: int):
+                 health: int) -> None:
         super().__init__(name, cost, rarity)
         self.attack = attack
         self.health = health
 
-    def play(self, game_state: dict) -> dict:
+    def play(self, game_state: dict[str, Any]) -> dict[str, Any]:
         effects = [
             "Creature summoned to battlefield",
             "A mysterious aura surrounds the creature",
@@ -31,7 +32,7 @@ class CreatureCard(Card):
             }
         return {}
 
-    def attack_target(self, target) -> dict:
+    def attack_target(self, target: str) -> dict[str, Any]:
         if self.attack > 0 and self.health > 0:
             combat_resolved = True
         else:

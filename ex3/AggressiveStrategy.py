@@ -1,8 +1,16 @@
+from typing import Any
+
+
 class GameStrategy():
     def __init__(self, type: str) -> None:
         self.strategy = type
 
-    def execute_turn(self, hand: list, battlefield: list) -> dict:
+    def execute_turn(
+        self,
+        hand: list[dict[str, Any]],
+        battlefield: list[Any],
+    ) -> dict[str, Any]:
+        # Sort the hand by cost (ascending) to maximize plays under mana limit.
         for i in range(len(hand)):
             for j in range(i + 1, len(hand)):
                 if hand[i]['cost'] > hand[j]['cost']:
@@ -20,6 +28,8 @@ class GameStrategy():
         damage = sum(card['cost']
                      for card in hand if card['name'] in cards_played)
 
+        # If the battlefield has enemies, attack creatures
+        # otherwise, attack player.
         if len(battlefield) > 0:
             targets_attacked = ['Enemy Creatures']
         else:
@@ -35,7 +45,10 @@ class GameStrategy():
     def get_strategy_name(self) -> str:
         return self.strategy
 
-    def prioritize_targets(self, available_targets: list) -> list:
+    def prioritize_targets(
+        self,
+        available_targets: list[dict[str, Any]],
+    ) -> list[dict[str, Any]]:
         at = available_targets
         for i in range(len(at)):
             for j in range(i + 1, len(at)):

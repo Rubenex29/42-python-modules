@@ -1,11 +1,19 @@
+"""Concrete card factory with a simple registry.
+
+Cards are created up-front and stored in a dict by type name.
+"""
+
 from ex0.CreatureCard import CreatureCard
 from ex1.SpellCard import SpellCard
 from ex1.ArtifactCard import ArtifactCard
+from ex0.Card import Card
 
 
 class CardFactory():
-    def __init__(self):
-        self.registered_cards = {}
+    def __init__(self) -> None:
+        self.registered_cards: dict[str, Card] = {}
+
+        # Register a small set of pre-built cards for the demo engine.
 
         dragon = CreatureCard("dragon", 5, "Legendary", 5, 5)
         self.register_card("dragon", dragon)
@@ -31,11 +39,11 @@ class CardFactory():
         crystal = ArtifactCard("Crystal Orb", 2, "Rare", 4, "spell_amplify")
         self.register_card("crystal", crystal)
 
-    def register_card(self, card_type: str, card) -> None:
+    def register_card(self, card_type: str, card: Card) -> None:
         self.registered_cards[card_type] = card
 
-    def get_card(self, card_type: str):
+    def get_card(self, card_type: str) -> Card | None:
         return self.registered_cards.get(card_type)
 
-    def list_cards(self) -> list:
+    def list_cards(self) -> list[str]:
         return list(self.registered_cards.keys())

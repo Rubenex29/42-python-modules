@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from ex0.Card import Card
+from typing import Any
 
 
 class CardFactory(ABC):
@@ -16,9 +17,9 @@ class CardFactory(ABC):
         pass
 
     @abstractmethod
-    def create_themed_deck(self, size: int) -> dict:
+    def create_themed_deck(self, size: int) -> dict[str, Any]:
         pass
 
     @abstractmethod
-    def get_supported_types(self) -> dict:
+    def get_supported_types(self) -> dict[str, Any]:
         pass

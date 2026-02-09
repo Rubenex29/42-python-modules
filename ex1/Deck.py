@@ -1,17 +1,23 @@
+"""Deck container for Card objects.
+
+Keeps a list of cards and provides basic deck operations such as add/remove,
+shuffle, draw, and simple deck statistics.
+"""
+
 from ex0.Card import Card
 from ex1.ArtifactCard import ArtifactCard
 from ex1.SpellCard import SpellCard
 from ex0.CreatureCard import CreatureCard
-from typing import List, Optional
+from typing import Any, List, Optional
 import random
 
 
 class Deck:
-    def __init__(self):
+    def __init__(self) -> None:
         self.cards: List[Card] = []
 
     def add_card(self, card: Card) -> None:
-        # Adiciona a carta ao deck (não joga a carta)
+        # Adds the card to the deck (does not play the card).
         self.cards.append(card)
 
     def remove_card(self, card_name: str) -> bool:
@@ -29,7 +35,8 @@ class Deck:
             return None
         return self.cards.pop()
 
-    def get_deck_stats(self) -> dict:
+    def get_deck_stats(self) -> dict[str, Any]:
+        # Counts each card type and computes average mana cost.
         total = len(self.cards)
         creature_count = sum(
             1 for card in self.cards
