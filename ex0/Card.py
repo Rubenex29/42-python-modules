@@ -17,7 +17,12 @@ class Card(ABC):
             "name": self.name,
             "cost": self.cost,
             "rarity": self.rarity,
+            "type": self.__class__.__name__.replace("Card", "") or "Card",
         }
 
     def is_playable(self, available_mana: int) -> bool:
-        return int(available_mana) >= self.cost
+        try:
+            mana = int(available_mana)
+        except (TypeError, ValueError):
+            return False
+        return mana >= self.cost

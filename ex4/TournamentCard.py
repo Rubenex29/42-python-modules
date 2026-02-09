@@ -13,6 +13,10 @@ class TournamentCard(Card, Combatable, Rankable):
                  health: int, wins: int = 0, losses: int = 0,
                  base_rating: int = 1000) -> None:
         super().__init__(name, cost, rarity)
+        if not isinstance(attack, int) or attack <= 0:
+            raise ValueError("attack must be a positive integer")
+        if not isinstance(health, int) or health <= 0:
+            raise ValueError("health must be a positive integer")
         self.attack_power = attack
         self.health = health
         self.wins = wins
@@ -20,7 +24,7 @@ class TournamentCard(Card, Combatable, Rankable):
         self.base_rating = base_rating
 
     def play(self, game_state: dict[str, Any]) -> dict[str, Any]:
-        available_mana = game_state["available_mana"]
+        available_mana = game_state.get("available_mana", 0)
         playable = self.is_playable(available_mana)
         if playable:
             return {
@@ -73,6 +77,15 @@ class TournamentCard(Card, Combatable, Rankable):
             "wins": self.wins,
             "losses": self.losses,
             "rating": self.calculate_rating(),
+        }
+
+    def get_tournament_stats(self) -> dict[str, Any]:
+        return {
+            "name": self.name,
+            "record": f"{self.wins}-{self.losses}",
+            "rating": self.calculate_rating(),
+            "attack": self.attack_power,
+            "health": self.health,
         }
 
     def process_match(self, opponent: "TournamentCard") -> dict[str, Any]:

@@ -8,7 +8,7 @@ from ex0.Card import Card
 from ex1.ArtifactCard import ArtifactCard
 from ex1.SpellCard import SpellCard
 from ex0.CreatureCard import CreatureCard
-from typing import Any, List, Optional
+from typing import Any, List
 import random
 
 
@@ -30,9 +30,9 @@ class Deck:
     def shuffle(self) -> None:
         random.shuffle(self.cards)
 
-    def draw_card(self) -> Optional[Card]:
+    def draw_card(self) -> Card:
         if not self.cards:
-            return None
+            raise ValueError("Cannot draw from an empty deck")
         return self.cards.pop()
 
     def get_deck_stats(self) -> dict[str, Any]:

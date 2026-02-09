@@ -2,11 +2,11 @@ from abc import ABC, abstractmethod
 from typing import Any
 
 
-class Strategy(ABC):
+class GameStrategy(ABC):
     @abstractmethod
     def execute_turn(
         self,
-        hand: list[dict[str, Any]],
+        hand: list[Any],
         battlefield: list[Any],
     ) -> dict[str, Any]:
         pass
@@ -18,6 +18,6 @@ class Strategy(ABC):
     @abstractmethod
     def prioritize_targets(
         self,
-        available_targets: list[dict[str, Any]],
-    ) -> list[dict[str, Any]]:
+        available_targets: list[Any],
+    ) -> list[Any]:
         pass

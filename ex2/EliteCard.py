@@ -5,9 +5,6 @@ EliteCard combines the base Card API with combat (Combatable) and magic
 """
 
 from ex0.Card import Card
-from ex0.CreatureCard import CreatureCard
-from ex1.ArtifactCard import ArtifactCard
-from ex1.SpellCard import SpellCard
 from ex2.Combatable import Combatable
 from ex2.Magical import Magical
 import random
@@ -18,12 +15,17 @@ class EliteCard(Card, Combatable, Magical):
     def __init__(self, name: str, cost: int, rarity: str, attack: int,
                  health: int, spell: str) -> None:
         super().__init__(name, cost, rarity)
+        if not isinstance(attack, int) or attack <= 0:
+            raise ValueError("attack must be a positive integer")
+        if not isinstance(health, int) or health <= 0:
+            raise ValueError("health must be a positive integer")
         self.attack_power = attack
         self.health = health
         self.spell = spell
+        self.mana_pool = 0
 
     def play(self, game_state: dict[str, Any]) -> dict[str, Any]:
-        available_mana = game_state["available_mana"]
+        available_mana = game_state.get("available_mana", 0)
         if self.is_playable(available_mana):
             return {
                 "card_played": self.name,
@@ -33,25 +35,15 @@ class EliteCard(Card, Combatable, Magical):
         return {}
 
     def attack(self, target: object) -> dict[str, Any]:
-        # Determine the combat type based on the target's runtime class.
         target_name = getattr(target, "name", str(target))
-        combat_type = "unknown"
-        if isinstance(target, CreatureCard):
-            combat_type = "melee"
-        elif isinstance(target, ArtifactCard):
-            combat_type = "artifact"
-        elif isinstance(target, SpellCard):
-            combat_type = "spell"
-
         return {
             "attacker": self.name,
             "target": target_name,
             "damage": self.attack_power,
-            "combat_type": combat_type,
+            "combat_type": "melee",
         }
 
     def defend(self, incoming_damage: int) -> dict[str, Any]:
-        # Simple block mechanic: randomly blocks 1-3 damage.
         block_value = random.randint(1, 3)
         damage_taken = max(0, incoming_damage - block_value)
         still_alive = (self.health - damage_taken) > 0
@@ -67,7 +59,6 @@ class EliteCard(Card, Combatable, Magical):
             "combatant": self.name,
             "attack_power": self.attack_power,
             "health": self.health,
-            "spell": self.spell,
         }
 
     def cast_spell(
@@ -83,9 +74,12 @@ class EliteCard(Card, Combatable, Magical):
         }
 
     def channel_mana(self, amount: int) -> dict[str, Any]:
+        if amount < 0:
+            raise ValueError("amount must be non-negative")
+        self.mana_pool += amount
         return {
             "channeled": amount,
-            "total_mana": self.cost + amount,
+            "total_mana": self.mana_pool,
         }
 
     def get_magic_stats(self) -> dict[str, Any]:
