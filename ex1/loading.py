@@ -2,6 +2,9 @@ import sys
 
 
 def check_environment():
+    # Environment detection:
+    # If `sys.prefix` equals `sys.base_prefix`, no venv is active.
+    # A venv changes `sys.prefix` to point at the environment root.
     if sys.prefix == sys.base_prefix:
         print("LOADING STATUS: Failure")
         print("Checking dependencies:")
@@ -12,6 +15,7 @@ def check_environment():
         sys.exit(1)
     print("LOADING STATUS: Loading programs...\n")
     print("Checking dependencies:")
+    # Heuristic: Poetry-created venvs commonly include these path segments.
     if "pypoetry" in sys.prefix or "virtualenvs" in sys.prefix:
         print("ENVIRONMENT: [Poetry] - Advanced dependency management active")
     else:
