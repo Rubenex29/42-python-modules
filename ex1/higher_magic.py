@@ -2,7 +2,7 @@ def spell_combiner(spell1: callable, spell2: callable) -> callable:
     def combined_spell(*args, **kwargs):
         result1 = spell1(*args, **kwargs)
         result2 = spell2(*args, **kwargs)
-        return (result1,result2)
+        return (result1, result2)
 
     return combined_spell
 
@@ -54,4 +54,21 @@ if __name__ == "__main__":
     amplified_spell = power_amplifier(base_spell, 3)
     print("Testing power amplifier...")
     print("Original: 10, Amplified:", amplified_spell())
+    print()
 
+    # Test conditional_caster
+    def condition(target):
+        if target:
+            return True
+        return False
+
+    conditional_spell = conditional_caster(condition, fireball)
+    print("Testing conditional caster...")
+    print("Conditional spell result:", conditional_spell("Dragon"))
+    print("Conditional spell result:", conditional_spell("Goblin"))
+    print()
+
+    # Test spell_sequence
+    sequence = spell_sequence([fireball, heal])
+    print("Testing spell sequence...")
+    print("Sequence spell result:", sequence("Dragon"))
