@@ -1,0 +1,11 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = git@vogsphere.42porto.com:vogsphere/intra-uuid-a17f1dc5-7496-481a-b72d-5e7171ba03b1-7243851-rumontei
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
