@@ -1,5 +1,6 @@
 from datetime import datetime
 from functools import wraps
+import random
 
 
 def spell_timer(func: callable) -> callable:
@@ -39,26 +40,41 @@ def retry_spell(max_attempts: int) -> callable:
                 except Exception:
                     pass
                 attempts += 1
-                print(f"Spell failed, retrying... (Attempt {attempts}/{max_attempts})")
+                print(f"Spell failed, retrying... "
+                      f"(Attempt {attempts}/{max_attempts})")
             return f"Spell failed after {max_attempts} attempts"
         return wrapper
     return decorator
 
-#• Name is valid if it’s at least 3 characters and contains only letters/spaces
+
+# Name is valid if it’s at least 3 characters and contains only letters/spaces
 class MageGuild:
     @staticmethod
     def validate_mage_name(name: str) -> bool:
         return len(name) >= 3 and all(c.isalpha() or c.isspace() for c in name)
-    # apenas quero testar o power validator, então não vou usar o validate_mage_name, sem nenhuma outra função, só o power_validator, nem criar outra função, só usar o power_validator diretamente no cast_spell
-    def cast_spell(self, spell_name: str, power: int) -> str:
-        @power_validator(10)
-        def cast():
-            return f"{spell_name} cast with power {power}"
-        return cast()
 
-# testar a classe
+    @spell_timer
+    @power_validator(10)
+    def cast_spell(self, spell_name: str, power: int) -> str:
+        return f"Successfully cast {spell_name} with power {power}"
+
+
+# testing everything together
 if __name__ == "__main__":
     guild = MageGuild()
     print(guild.cast_spell("Fireball", 5))  # Should fail validation
+    print()
     print(guild.cast_spell("Ice Shard", 15))  # Should succeed
-    
+    print()
+    print(MageGuild.validate_mage_name("Gandalf"))  # Should return True
+    print(MageGuild.validate_mage_name("Al"))  # Should return False
+    # Testing retry_spell with a function that randomly fails
+    print("\nTesting retry_spell decorator...")
+
+    @retry_spell(3)
+    def unstable_spell():
+        if random.random() < 0.5:
+            return "Spell fizzled"
+        return "Spell succeeded"
+
+    print(unstable_spell())
