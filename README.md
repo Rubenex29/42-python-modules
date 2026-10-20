@@ -33,7 +33,8 @@ Each `moduleXX/` directory retains the exercise layout from its original
 repository. Most exercises are grouped under `ex0/`, `ex1/`, and so on;
 Module 06 uses a package-oriented layout.
 
-Use Python 3 and run examples from the relevant module directory. For example:
+Use Python 3.12 or newer: some exercises use f-string syntax introduced in
+Python 3.12. Run examples from the relevant module directory. For example:
 
 ```bash
 git clone https://github.com/Rubenex29/42-python-modules.git
