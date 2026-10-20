@@ -1,0 +1,17 @@
+# Python environments and generated caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Local configuration
+.vscode/
+.idea/
+.DS_Store
+.env
+.env.*
+!.env.example
