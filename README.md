@@ -61,11 +61,10 @@ credentials out of Git.
 
 ## History and provenance
 
-The default-branch histories of `PythonModule00` through `PythonModule10` were
-merged into this repository without rewriting the original commits. Authors,
-commit IDs and existing credits are preserved. Each import commit places that
-module's original contents under its own directory; older commits retain their
-original paths.
+Modules 00–04 and 06–10 retain their original default-branch histories,
+including author metadata and commit IDs. Module 05 is imported as a consolidated
+snapshot. Each import places the module under its own directory; older commits
+retain their original paths.
 
 The original repositories remain available for course-related use and reference.
 This repository provides a single place to browse the full learning sequence.
