@@ -66,7 +66,8 @@ including author metadata and commit IDs. Module 05 is imported as a consolidate
 snapshot. Each import places the module under its own directory; older commits
 retain their original paths.
 
-The original repositories remain available for course-related use and reference.
-This repository provides a single place to browse the full learning sequence.
+The separate module repositories have been retired after verifying that their
+files match the corresponding directories here. This repository is now the
+single place to browse the full learning sequence.
 
 *Developed as part of the 42 Python curriculum.*
